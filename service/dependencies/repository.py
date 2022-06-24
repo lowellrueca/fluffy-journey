@@ -5,4 +5,4 @@ from typing import Type
 
 class SteelRepository(BaseRepository):
     db_model: Type[Steel] = Steel
-    ls_model: Type[SteelModelQuerySet] = SteelModelQuerySet
+    pydantic_list_model: Type[SteelModelQuerySet] = SteelModelQuerySet
