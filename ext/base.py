@@ -18,6 +18,7 @@ class BaseRepository:
 
     async def serialize_query_set(self, query_set: QuerySet[Model]) -> Any:
         models: PydanticListModel = await self.pydantic_list_model.from_queryset(query_set)
+    async def serialize_model(self, obj: Model) -> Dict[str, Any]:
         model: PydanticModel = await self.pydantic_model.from_tortoise_orm(obj=obj)
         content: Dict[str, Any] = {}
         content = models.schema()
