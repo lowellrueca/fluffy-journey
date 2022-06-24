@@ -22,9 +22,14 @@ class BaseRepository:
 
     async def serialize_query_set(self, query_set: QuerySet[Model]) -> Any:
         models: PydanticListModel = await self.pydantic_list_model.from_queryset(query_set)
+        return await self._serialize(obj=models)
+
     async def serialize_model(self, obj: Model) -> Dict[str, Any]:
         model: PydanticModel = await self.pydantic_model.from_tortoise_orm(obj=obj)
+        return await self._serialize(obj=model)
+
+    async def _serialize(self, obj: PydanticListModel | PydanticModel):
         content: Dict[str, Any] = {}
-        content = models.schema()
-        content["data"] = orjson.loads(models.json())
+        content = obj.schema()
+        content["data"] = orjson.loads(obj.json())
         return content
