@@ -1,3 +1,4 @@
+from pydantic.types import UUID4
 from service.dependencies import SteelRepository
 from starlite import Controller, Parameter, Provide, get
 from tortoise.queryset import QuerySet
@@ -25,6 +26,7 @@ class ProductController(Controller):
         query_set: QuerySet[Model] = await repository.get_by_offset_limit(offset=page_number, limit=page_size)
         return await repository.serialize_query_set(query_set=query_set)
 
-    @get(path="/{product_id:int}")
-    async def get_product_by_id(self, product_id: int) -> dict:
-        return {"data": [{"product_id": product_id, "name": "Elsa"}]}
+    @get(path="/{product_id:uuid}")
+    async def get_product_by_id(self, repository: SteelRepository, product_id: UUID4) -> Dict[str, Any]:
+        model: Model = await repository.get_by_id(id=product_id)
+        return await repository.serialize_model(obj=model)
