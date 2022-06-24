@@ -1,4 +1,5 @@
 import orjson
+from pydantic.types import UUID4
 from tortoise.queryset import QuerySet
 from tortoise.contrib.pydantic.base import PydanticListModel, PydanticModel
 from tortoise.models import Model
@@ -15,6 +16,9 @@ class BaseRepository:
 
     async def get_by_offset_limit(self, offset: int, limit: int) -> QuerySet[Model]:
         return self.db_model.all().offset(offset=offset).limit(limit=limit)
+
+    async def get_by_id(self, id:UUID4) -> Model:
+        return await self.db_model.get(id=id)
 
     async def serialize_query_set(self, query_set: QuerySet[Model]) -> Any:
         models: PydanticListModel = await self.pydantic_list_model.from_queryset(query_set)
