@@ -1,7 +1,6 @@
-
 import orjson
 from tortoise.queryset import QuerySet
-from tortoise.contrib.pydantic.base import PydanticListModel
+from tortoise.contrib.pydantic.base import PydanticListModel, PydanticModel
 from tortoise.models import Model
 from typing import Any, Dict, Type
 
