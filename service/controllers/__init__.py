@@ -1,4 +1,4 @@
-from .products import ProductController
+from .steel import SteelController
 
 
-__all__ = ["ProductController"]
+__all__ = ["SteelController"]
