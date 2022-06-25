@@ -12,7 +12,7 @@ class AbstractModel(Model):
 
 
 class Steel(AbstractModel):
-    """ DB Model of Steel Product """
+    """ Steel Product """
 
     name = CharField(max_length=128, nullable=False)
 
