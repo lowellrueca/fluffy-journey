@@ -21,14 +21,22 @@ class SteelController(Controller):
             self, 
             repository: SteelRepository,
             page_number: int = Parameter(query="pageNumber", default=1), 
-            page_size: int = Parameter(query="pageSize", default=24, gt=0, le=50)
+            page_size: int = Parameter(
+                query="pageSize", default=24, gt=0, le=50)
         ) -> Dict[str, Any] | None:
 
-        query_set: QuerySet[Steel] = await repository.get_many(offset=page_number, limit=page_size)
+        query_set: QuerySet[Steel] = await repository.get_many(
+                offset=page_number, limit=page_size)
+
         return await repository.serialize_query_set(query_set=query_set) 
 
     @get(path="/{product_id:uuid}")
-    async def get_product_by_id(self, repository: SteelRepository, product_id: UUID4) -> Dict[str, Any]:
+    async def get_product_by_id(
+            self, 
+            repository: SteelRepository, 
+            product_id: UUID4
+        ) -> Dict[str, Any]:
+
         try:
             model: Model | Steel = await repository.get_by_id(id=product_id)
             return await repository.serialize_model(obj=model)
@@ -37,12 +45,22 @@ class SteelController(Controller):
             raise HTTPException(status_code=404, detail="Product not found")
 
     @post(path="/")
-    async def create_product(self, repository: SteelRepository, data: SteelDTO) -> Dict[str, Any]:
+    async def create_product(
+            self, 
+            repository: SteelRepository, 
+            data: SteelDTO
+        ) -> Dict[str, Any]:
+
         model: Steel = await repository.create(data=data)
         return await repository.serialize_model(obj=model)
  
     @patch(path="/{product_id:uuid}")
-    async def update_product(self, repository: SteelRepository, product_id: UUID4, data: Partial[SteelDTO]) -> Dict[str, Any]:
+    async def update_product(
+            self, repository: SteelRepository, 
+            product_id: UUID4, 
+            data: Partial[SteelDTO]
+        ) -> Dict[str, Any]:
+
         try:
             model: Steel = await repository.update(id=product_id, data=data)
             return await repository.serialize_model(obj=model)
@@ -51,7 +69,12 @@ class SteelController(Controller):
             raise HTTPException(status_code=404, detail="Product not found")
 
     @delete(path="/{product_id:uuid}")
-    async def delete_product(self, repository: SteelRepository, product_id: UUID4) -> None:
+    async def delete_product(
+            self, 
+            repository: SteelRepository, 
+            product_id: UUID4
+        ) -> None:
+
         try:
             await repository.delete(id=product_id)
 
