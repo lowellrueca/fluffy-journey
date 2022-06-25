@@ -1,9 +1,13 @@
+from typing import Any, Dict, Generic, Type
+
 import orjson
 from pydantic.types import UUID4
-from tortoise.queryset import QuerySet
+from starlite.dto import DTO
+from starlite.types import Partial
 from tortoise.contrib.pydantic.base import PydanticListModel, PydanticModel
-from tortoise.models import Model
-from typing import Any, Dict, Type
+from tortoise.queryset import QuerySet
+
+from ext.types import TModel
 
 
 class BaseRepository:
