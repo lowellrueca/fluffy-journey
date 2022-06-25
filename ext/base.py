@@ -10,7 +10,6 @@ from tortoise.queryset import QuerySet
 from ext.types import TModel
 
 
-
 class BaseRepository(Generic[TModel]):
     db_model: Type[TModel]
     pydantic_list_model: Type[PydanticListModel]
