@@ -1,5 +1,5 @@
 from pydantic.types import UUID4
-from starlite import Controller, Parameter, Provide, get, post
+from starlite import Controller, Parameter, Provide, get, post, patch, delete
 from service.dependencies import SteelRepository
 from service.models.dto import SteelDTO
 from tortoise.queryset import QuerySet
