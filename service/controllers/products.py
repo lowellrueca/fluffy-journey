@@ -1,6 +1,7 @@
 from pydantic.types import UUID4
+from starlite import Controller, Parameter, Provide, get, post
 from service.dependencies import SteelRepository
-from starlite import Controller, Parameter, Provide, get
+from service.models.dto import SteelDTO
 from tortoise.queryset import QuerySet
 from tortoise.models import Model
 from typing import Any, Dict
@@ -30,3 +31,9 @@ class ProductController(Controller):
     async def get_product_by_id(self, repository: SteelRepository, product_id: UUID4) -> Dict[str, Any]:
         model: Model = await repository.get_by_id(id=product_id)
         return await repository.serialize_model(obj=model)
+
+    @post(path="/")
+    async def create_product(self, repository: SteelRepository, data: SteelDTO) -> Dict[str, Any]:
+        name = data.name or None
+        db_model = await repository.db_model.create(name=name)
+        return await repository.serialize_model(obj=db_model)
