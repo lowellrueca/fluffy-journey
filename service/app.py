@@ -1,4 +1,5 @@
 from starlite.app import Starlite as App
+from starlite.router import Router
 from starlite.types import ControllerRouterHandler
 from typing import List
 
