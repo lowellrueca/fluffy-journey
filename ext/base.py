@@ -42,7 +42,7 @@ class BaseRepository(Generic[TModel]):
         model: PydanticModel = await self.pydantic_model.from_tortoise_orm(obj=obj)
         return await self._serialize(obj=model)
 
-    async def _serialize(self, obj: PydanticListModel | PydanticModel):
+    async def _serialize(self, obj: PydanticListModel | PydanticModel) -> Dict[str, Any]:
         content: Dict[str, Any] = {}
         content = obj.schema()
         content["data"] = orjson.loads(obj.json())
