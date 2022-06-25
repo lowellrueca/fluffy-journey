@@ -24,7 +24,7 @@ class SteelController(Controller):
             page_size: int = Parameter(query="pageSize", default=24, gt=0, le=50)
         ) -> Dict[str, Any] | None:
 
-        query_set: QuerySet[Model] | QuerySet[Steel] = await repository.get_many(offset=page_number, limit=page_size)
+        query_set: QuerySet[Steel] = await repository.get_many(offset=page_number, limit=page_size)
         return await repository.serialize_query_set(query_set=query_set) 
 
     @get(path="/{product_id:uuid}")
