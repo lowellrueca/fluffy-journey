@@ -4,7 +4,7 @@ from pydantic.types import UUID4
 from tortoise.queryset import QuerySet
 
 from ext.base import BaseRepository
-from service.models import Steel, SteelDTO, SteelModel, SteelModelQuerySet
+from service.models import Steel, SteelModel, SteelModelQuerySet
 
 
 class SteelRepository(BaseRepository):
