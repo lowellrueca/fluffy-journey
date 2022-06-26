@@ -2,7 +2,6 @@ from typing import Any, Dict, Generic, Type
 
 import orjson
 from pydantic.types import UUID4
-from starlite.dto import DTO
 from tortoise.contrib.pydantic.base import PydanticListModel, PydanticModel
 from tortoise.queryset import QuerySet
 
