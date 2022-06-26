@@ -18,10 +18,8 @@ class SteelRepository(BaseRepository):
     async def get_by_id(self, id: UUID4) ->  Steel:
         return await super().get_by_id(id=id)
 
-    async def create(self, data: SteelDTO) -> Steel:
-        name = getattr(data, "name")
-        model: Steel = await self.db_model.create(name=name)
-        return model
+    async def create(self, data: dict) -> Steel:
+        return await super().create(data=data)
 
     async def update(self, id: UUID4, data: dict) -> Steel: 
         return await super().update(id=id, data=data)
