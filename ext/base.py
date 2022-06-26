@@ -21,8 +21,8 @@ class BaseRepository(Generic[TModel]):
     async def get_by_id(self, id: UUID4) -> TModel:
         return await self.db_model.get(id=id)
 
-    async def create(self, data: DTO):
-        raise NotImplementedError()
+    async def create(self, data: dict) -> TModel:
+        return await self.db_model.create(**data) 
 
     async def update(self, id: UUID4, data: dict) -> TModel:
         model: TModel = await self.db_model.get(id=id)
