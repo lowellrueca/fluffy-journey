@@ -4,7 +4,7 @@ from pydantic.types import UUID4
 from starlette.exceptions import HTTPException
 from starlite import Controller, Parameter, Provide, delete, get, patch, post
 from starlite.types import Partial
-from tortoise.exceptions import DoesNotExist
+from tortoise.exceptions import DoesNotExist, OperationalError
 from tortoise.models import Model
 from tortoise.queryset import QuerySet
 
