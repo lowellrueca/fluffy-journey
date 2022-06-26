@@ -51,9 +51,18 @@ class SteelController(Controller):
             data: SteelDTO
         ) -> Dict[str, Any]:
 
-        model: Steel = await repository.create(data=data)
-        return await repository.serialize_model(obj=model)
- 
+        data_in: dict = { "name": getattr(data, "name") }   
+
+        try:
+            model: Steel = await repository.create(data=data_in)
+            return await repository.serialize_model(obj=model)
+
+        except OperationalError:
+            raise HTTPException(
+                status_code=500, 
+                detail="An unexpected error occured"
+            )
+
     @patch(path="/{product_id:uuid}")
     async def update_product(
             self, repository: SteelRepository, 
