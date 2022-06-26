@@ -61,6 +61,10 @@ class SteelController(Controller):
             data: Partial[SteelDTO]
         ) -> Dict[str, Any]:
 
+        data_in: dict = {
+            "name": getattr(data, "name")
+        }   
+
         try:
             model: Steel = await repository.update(id=product_id, data=data_in)
             return await repository.serialize_model(obj=model)
