@@ -62,7 +62,7 @@ class SteelController(Controller):
         ) -> Dict[str, Any]:
 
         try:
-            model: Steel = await repository.update(id=product_id, data=data)
+            model: Steel = await repository.update(id=product_id, data=data_in)
             return await repository.serialize_model(obj=model)
 
         except DoesNotExist:
