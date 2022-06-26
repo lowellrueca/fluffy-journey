@@ -3,7 +3,6 @@ from typing import Any, Dict, Generic, Type
 import orjson
 from pydantic.types import UUID4
 from starlite.dto import DTO
-from starlite.types import Partial
 from tortoise.contrib.pydantic.base import PydanticListModel, PydanticModel
 from tortoise.queryset import QuerySet
 
@@ -26,9 +25,12 @@ class BaseRepository(Generic[TModel]):
     async def create(self, data: DTO):
         raise NotImplementedError()
 
-    async def update(self, id: UUID4, data: Partial[DTO[PydanticModel]]):
-        raise NotImplementedError()
-
+    async def update(self, id: UUID4, data: dict) -> TModel:
+        model: TModel = await self.db_model.get(id=id)
+        await model.update_from_dict(data=data)
+        await model.save()
+        return model
+        
     async def delete(self, id: UUID4) -> None:
         model: TModel = await self.db_model.get(id=id)
         await model.delete()
