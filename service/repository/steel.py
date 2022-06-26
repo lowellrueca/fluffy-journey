@@ -1,7 +1,6 @@
 from typing import Type
 
 from pydantic.types import UUID4
-from starlite.types import Partial
 from tortoise.queryset import QuerySet
 
 from ext.base import BaseRepository
@@ -24,11 +23,8 @@ class SteelRepository(BaseRepository):
         model: Steel = await self.db_model.create(name=name)
         return model
 
-    async def update(self, id: UUID4, data: Partial[SteelDTO]) -> Steel: 
-        model: Steel = await self.db_model.get(id=id)
-        model.name = getattr(data, "name")
-        await model.save()
-        return model
+    async def update(self, id: UUID4, data: dict) -> Steel: 
+        return await super().update(id=id, data=data)
 
     async def delete(self, id: UUID4) -> None:
         return await super().delete(id=id)
